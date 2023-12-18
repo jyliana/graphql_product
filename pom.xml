@@ -129,6 +129,8 @@
 								<PositiveFloat>java.lang.Double</PositiveFloat>
 								<NegativeInt>java.lang.Integer</NegativeInt>
 								<NegativeFloat>java.lang.Double</NegativeFloat>
+                                <ManufacturerConnection>graphql.relay.SimpleListConnection</ManufacturerConnection>
+								<SeriesConnection>graphql.relay.SimpleListConnection</SeriesConnection>
 							</typeMapping>
 						</configuration>
 					</execution>
