@@ -4,7 +4,6 @@ import com.example.graphql.types.ManufacturerInput;
 import com.example.graphql.types.SeriesInput;
 import com.example.product.datasource.entity.Series;
 import com.example.product.datasource.repository.SeriesRepository;
-import com.example.product.datasource.specification.SeriesSpecification;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -13,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.product.datasource.specification.SeriesSpecification.*;
 
 @Service
 public class SeriesQueryService {
@@ -25,21 +26,20 @@ public class SeriesQueryService {
             new ManufacturerInput() : seriesInput.getManufacturer();
     var specification = Specification.where(
             StringUtils.isNotBlank(seriesInput.getName()) ?
-                    SeriesSpecification.seriesNameContainsIgnoreCase(
-                            seriesInput.getName())
+                    seriesNameContainsIgnoreCase(seriesInput.getName())
                     : null
     ).and(
             StringUtils.isNotBlank(manufacturerInput.getName()) ?
-                    SeriesSpecification.manufacturerNameContainsIgnoreCase(
-                            manufacturerInput.getName())
+                    manufacturerNameContainsIgnoreCase(manufacturerInput.getName())
                     : null
     ).and(
             StringUtils.isNotBlank(manufacturerInput.getOriginCountry()) ?
-                    SeriesSpecification.manufacturerOriginCountryContainsIgnoreCase(
-                            manufacturerInput.getOriginCountry())
+                    manufacturerOriginCountryContainsIgnoreCase(manufacturerInput.getOriginCountry())
                     : null
     );
 
-    return seriesRepository.findAll(specification);
+    var sortOrders = sortOrdersFrom(seriesInput.getSorts());
+
+    return seriesRepository.findAll(specification, Sort.by(sortOrders));
   }
 }

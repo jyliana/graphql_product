@@ -2,7 +2,11 @@ package com.example.product.datasource.specification;
 
 import com.example.graphql.types.Transmission;
 import com.example.product.datasource.entity.Model;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModelSpecification extends BaseSpecification {
 
@@ -10,6 +14,8 @@ public class ModelSpecification extends BaseSpecification {
   public static final String FIELD_TRANSMISSION = "transmission";
   public static final String FIELD_IS_AVAILABLE = "isAvailable";
   public static final String FIELD_SERIES = "series";
+  public static final String FIELD_EXTERIOR_COLOR = "exteriorColor";
+  private static final String FIELD_ON_THE_ROAD_PRICE = "onTheRoadPrice";
 
   public static Specification<Model> modelNameContainsIgnoreCase(String keyword) {
     return (root, query, criteriaBuilder) -> criteriaBuilder.like(
@@ -26,12 +32,10 @@ public class ModelSpecification extends BaseSpecification {
   }
 
   public static Specification<Model> transmissionEquals(Transmission transmission) {
-    return (root, query, criteriaBuilder) -> {
-      return criteriaBuilder.equal(
-              root.get(FIELD_TRANSMISSION),
-              transmission.toString()
-      );
-    };
+    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(
+            root.get(FIELD_TRANSMISSION),
+            transmission.toString()
+    );
   }
 
   public static Specification<Model> seriesNameContainsIgnoreCase(String keyword) {
@@ -74,6 +78,44 @@ public class ModelSpecification extends BaseSpecification {
       );
     };
   }
+
+  public static Specification<Model> exteriorColorsLikeIgnoreCase(List<String> exteriorColors) {
+    return (root, query, criteriaBuilder) -> {
+      var predicates = new ArrayList<Predicate>();
+
+      for (var exteriorColor : exteriorColors) {
+        predicates.add(criteriaBuilder.like(
+                criteriaBuilder.lower(root.get(FIELD_EXTERIOR_COLOR)),
+                contains(exteriorColor.toLowerCase())
+        ));
+      }
+
+      return criteriaBuilder.or(predicates.toArray(new Predicate[]{})
+      );
+    };
+  }
+
+  public static Specification<Model> priceGreaterThanEquals(int value) {
+    return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(
+            root.get(FIELD_ON_THE_ROAD_PRICE),
+            value
+    );
+  }
+
+  public static Specification<Model> priceLessThanEquals(int value) {
+    return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(
+            root.get(FIELD_ON_THE_ROAD_PRICE),
+            value
+    );
+  }
+
+  public static Specification<Model> priceBetween(int value, int highValue) {
+    return (root, query, criteriaBuilder) -> criteriaBuilder.between(
+            root.get(FIELD_ON_THE_ROAD_PRICE),
+            value, highValue
+    );
+  }
+
 
 
 }

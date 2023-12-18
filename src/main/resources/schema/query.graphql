@@ -1,5 +1,6 @@
 type Query {
-    manufacturers(manufacturerInput : ManufacturerInput): [Manufacturer]
-    series(seriesInput : SeriesInput): [Series]
-    models(modelInput : ModelInput): [Model]
+    manufacturers(manufacturerInput : ManufacturerInput)      : [Manufacturer]
+    series(seriesInput              : SeriesInput)            : [Series]
+    models(modelInput               : ModelInput
+           priceInput               : NumericComparisonInput) : [Model]
 }
