@@ -6,6 +6,18 @@
       <excludeFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" />
     </content>
   </component>
+  <component name="FacetManager">
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="Hibernate" />
+        <datasource-mapping>
+          <factory-entry name="entityManagerFactory" value="e5f9469b-3bd2-44cc-9818-9eb9cd823f81" />
+        </datasource-mapping>
+        <naming-strategy-map />
+      </configuration>
+    </facet>
+  </component>
   <component name="SonarLintModuleSettings">
     <option name="uniqueId" value="715cf478-5a3a-4183-a9e4-f8293699b64c" />
   </component>

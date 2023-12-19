@@ -131,6 +131,7 @@
 								<NegativeFloat>java.lang.Double</NegativeFloat>
                                 <ManufacturerConnection>graphql.relay.SimpleListConnection</ManufacturerConnection>
 								<SeriesConnection>graphql.relay.SimpleListConnection</SeriesConnection>
+								<ModelConnection>graphql.relay.Connection</ModelConnection>
 							</typeMapping>
 						</configuration>
 					</execution>

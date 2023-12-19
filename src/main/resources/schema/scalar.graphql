@@ -8,3 +8,4 @@ scalar PositiveFloat
 scalar PositiveInt
 scalar NonPositiveFloat
 scalar NonPositiveInt
+scalar Long
