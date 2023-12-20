@@ -1,13 +1,11 @@
 package com.example.product.service.query;
 
-import com.example.graphql.types.ManufacturerInput;
-import com.example.graphql.types.ModelInput;
-import com.example.graphql.types.NumericComparisonInput;
-import com.example.graphql.types.SeriesInput;
+import com.example.graphql.types.*;
+import com.example.product.mapper.ModelMapper;
 import com.example.product.datasource.entity.Model;
 import com.example.product.datasource.repository.ModelRepository;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -17,12 +15,14 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.example.product.datasource.specification.ModelSpecification.*;
 
 @Service
+@AllArgsConstructor
 public class ModelQueryService {
-  @Autowired
+
   private ModelRepository modelRepository;
 
   public List<Model> findModels(Optional<ModelInput> input, Optional<NumericComparisonInput> priceInput) {
@@ -143,6 +143,12 @@ public class ModelQueryService {
     );
 
     return modelRepository.findAll(specification, pageable);
+  }
+
+  public List<ModelSimple> findModels(List<String> modelUuids) {
+    var models = modelRepository.findAllById(modelUuids.stream().map(UUID::fromString).toList());
+
+    return models.stream().map(ModelMapper::toModelSimple).toList();
   }
 
 }

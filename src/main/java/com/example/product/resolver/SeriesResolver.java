@@ -6,18 +6,18 @@ import com.example.product.service.query.SeriesQueryService;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
+import graphql.relay.Connection;
 import graphql.relay.SimpleListConnection;
 import graphql.schema.DataFetchingEnvironment;
-import org.springframework.beans.factory.annotation.Autowired;
-import graphql.relay.Connection;
-
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
 @DgsComponent
+@AllArgsConstructor
 public class SeriesResolver {
-  @Autowired
+
   private SeriesQueryService seriesQueryService;
 
   @DgsQuery

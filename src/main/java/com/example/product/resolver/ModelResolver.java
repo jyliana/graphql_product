@@ -2,6 +2,7 @@ package com.example.product.resolver;
 
 import com.example.graphql.types.ModelInput;
 import com.example.graphql.types.ModelPagination;
+import com.example.graphql.types.ModelSimple;
 import com.example.graphql.types.NumericComparisonInput;
 import com.example.product.datasource.entity.Model;
 import com.example.product.service.query.ModelQueryService;
@@ -10,14 +11,15 @@ import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import graphql.relay.SimpleListConnection;
 import graphql.schema.DataFetchingEnvironment;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
 @DgsComponent
+@AllArgsConstructor
 public class ModelResolver {
-  @Autowired
+
   private ModelQueryService modelQueryService;
 
   @DgsQuery
@@ -49,6 +51,11 @@ public class ModelResolver {
     paginatedResult.setTotalElement(pageModel.getTotalElements());
 
     return paginatedResult;
+  }
+
+  @DgsQuery
+  public List<ModelSimple> simpleModels(@InputArgument List<String> modelUuids) {
+    return modelQueryService.findModels(modelUuids);
   }
 
 }

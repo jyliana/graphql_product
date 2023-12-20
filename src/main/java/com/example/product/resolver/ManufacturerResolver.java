@@ -9,15 +9,15 @@ import com.netflix.graphql.dgs.InputArgument;
 import graphql.relay.Connection;
 import graphql.relay.SimpleListConnection;
 import graphql.schema.DataFetchingEnvironment;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
 @DgsComponent
+@AllArgsConstructor
 public class ManufacturerResolver {
 
-  @Autowired
   private ManufacturerQueryService manufacturerQueryService;
 
   @DgsQuery

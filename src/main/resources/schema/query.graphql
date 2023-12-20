@@ -7,8 +7,8 @@ type Query {
 
     models(
         modelInput         : ModelInput,
-        priceInput         : NumericComparisonInput)
-    :   [Model]
+        priceInput         : NumericComparisonInput
+    ) :   [Model]
 
     manufacturersPagination(
         manufacturerInput  : ManufacturerInput,
@@ -16,8 +16,7 @@ type Query {
         last               : Int,
         after              : String,
         before             : String
-    )
-    : ManufacturerConnection
+    ) : ManufacturerConnection
 
     seriesPagination(
         seriesInput  : SeriesInput,
@@ -25,14 +24,17 @@ type Query {
         last               : Int,
         after              : String,
         before             : String
-    )
-    : SeriesConnection
+    ) : SeriesConnection
 
     modelsPagination(
         modelInput         : ModelInput,
         priceInput         : NumericComparisonInput
         page               : Int
         size               : Int
-    )
-    : ModelPagination
+    ) : ModelPagination
+
+    simpleModels(
+        modelUuids         : [String!]!
+    ) : [ModelSimple]
+
 }
